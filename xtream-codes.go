@@ -261,12 +261,12 @@ func (c *XtreamClient) GetVideoOnDemandInfo(vodID string) (*VideoOnDemandInfo, e
 }
 
 // GetShortEPG returns a short version of the EPG for the given streamID. If no limit is provided, the next 4 items in the EPG will be returned.
-func (c *XtreamClient) GetShortEPG(streamID string, limit int) ([]EPGInfo, error) {
+func (c *XtreamClient) GetShortEPG(streamID string, limit int) (*epgContainer, error) {
 	return c.getEPG("get_short_epg", streamID, limit)
 }
 
 // GetEPG returns the full EPG for the given streamID.
-func (c *XtreamClient) GetEPG(streamID string) ([]EPGInfo, error) {
+func (c *XtreamClient) GetEPG(streamID string) (*epgContainer, error) {
 	return c.getEPG("get_simple_data_table", streamID, 0)
 }
 
@@ -280,7 +280,7 @@ func (c *XtreamClient) GetXMLTV() ([]byte, error) {
 	return xmlTVData, xmlTVErr
 }
 
-func (c *XtreamClient) getEPG(action, streamID string, limit int) ([]EPGInfo, error) {
+func (c *XtreamClient) getEPG(action, streamID string, limit int) (*epgContainer, error) {
 	if streamID == "" {
 		return nil, fmt.Errorf("stream ID can not be empty")
 	}
@@ -299,7 +299,7 @@ func (c *XtreamClient) getEPG(action, streamID string, limit int) ([]EPGInfo, er
 
 	jsonErr := json.Unmarshal(epgData, &epgContainer)
 
-	return epgContainer.EPGListings, jsonErr
+	return epgContainer, jsonErr
 }
 
 func (c *XtreamClient) sendRequest(action string, parameters url.Values) ([]byte, error) {
