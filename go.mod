@@ -1,6 +1,6 @@
 module github.com/ikheetjeff/go.xtream-codes
 
-go 1.17
+1.22.1
 
 require github.com/onsi/gomega v1.17.0
 
