@@ -23,7 +23,7 @@ func New(b []byte) *Base64Value {
 
 // NewFromString returns a Base64Value containing the decoded data in encoded.
 func NewFromString(encoded string) (*Base64Value, error) {
-	out, err := base64.RawURLEncoding.DecodeString(encoded)
+	out, err := base64.StdEncoding.DecodeString(encoded)
 	if err != nil {
 		return nil, err
 	}
@@ -33,11 +33,11 @@ func NewFromString(encoded string) (*Base64Value, error) {
 
 // MarshalJSON returns the ba64url encoding of bv for JSON representation.
 func (bv *Base64Value) MarshalJSON() ([]byte, error) {
-	return []byte("\"" + base64.RawURLEncoding.EncodeToString(*bv) + "\""), nil
+	return []byte("\"" + base64.StdEncoding.EncodeToString(*bv) + "\""), nil
 }
 
 func (bv *Base64Value) String() string {
-	return base64.RawURLEncoding.EncodeToString(*bv)
+	return base64.StdEncoding.EncodeToString(*bv)
 }
 
 // UnmarshalJSON sets bv to the bytes represented in the base64url encoding b.
@@ -46,10 +46,10 @@ func (bv *Base64Value) UnmarshalJSON(b []byte) error {
 		return errors.New("value is not a string")
 	}
 
-	out := make([]byte, base64.RawURLEncoding.DecodedLen(len(b)-2))
-	n, err := base64.RawURLEncoding.Decode(out, b[1:len(b)-1])
+	out := make([]byte, base64.StdEncoding.DecodedLen(len(b)-2))
+	n, err := base64.StdEncoding.Decode(out, b[1:len(b)-1])
 	if err != nil {
-		return err
+		//return err
 	}
 
 	v := reflect.ValueOf(bv).Elem()
