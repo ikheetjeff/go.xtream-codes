@@ -1,4 +1,4 @@
-module github.com/tellytv/go.xtream-codes
+module github.com/ikheetjeff/go.xtream-codes
 
 go 1.17
 
