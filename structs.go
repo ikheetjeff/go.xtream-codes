@@ -52,7 +52,6 @@ type Stream struct {
 	Added              *Timestamp `json:"added"`
 	CategoryID         FlexInt    `json:"category_id"`
 	CategoryName       string     `json:"category_name"`
-	ContainerExtension string     `json:"container_extension"`
 	CustomSid          string     `json:"custom_sid"`
 	DirectSource       string     `json:"direct_source,omitempty"`
 	EPGChannelID       string     `json:"epg_channel_id"`
